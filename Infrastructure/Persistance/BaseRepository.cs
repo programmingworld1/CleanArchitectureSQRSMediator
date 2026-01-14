@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Persistance
@@ -32,6 +33,11 @@ namespace Infrastructure.Persistance
         public async Task Add(T entity)
         {
             await _dbSet.AddAsync(entity);
+        }
+
+        public async Task AddRange(IEnumerable<T> entities)
+        {
+            await _dbSet.AddRangeAsync(entities);
         }
 
         public void Update(T entity)

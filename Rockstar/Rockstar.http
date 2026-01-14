@@ -1,0 +1,84 @@
+@host=https://localhost:61407
+@apiKey=GetAcceptedApiKeysFromAppDevSettings
+@myBearerToken=GetBearerTokenCallingRegisterOrLoginEndpoint
+
+### Register
+POST {{host}}/authentication/register
+X-Api-Key: {{apiKey}}
+Content-Type: application/json
+{
+  "firstName": "Voornaam",
+  "lastName": "Achternaam",
+  "email": "test@teamrockstars.nl",
+  "password": "pass123"
+}
+
+### Login
+POST {{host}}/authentication/login
+X-Api-Key: {{apiKey}}
+Content-Type: application/json
+{
+  "email": "test@teamrockstars.nl",
+  "password": "pass123"
+}
+
+### Get artist
+GET {{host}}/Artists/GetArtist?name=311
+X-Api-Key: {{apiKey}}
+Authorization: Bearer {{myBearerToken}}
+
+### Import Artists
+PUT {{host}}/Artists/Import
+X-Api-Key: {{apiKey}}
+Authorization: Bearer {{myBearerToken}}
+
+### Register Artists
+POST {{host}}/Artists/RegisterArtists
+X-Api-Key: {{apiKey}}
+Authorization: Bearer {{myBearerToken}}
+Content-Type: application/json
+[
+  {
+    "name": "MyNewArtist"
+  }
+]
+
+### Delete Artist
+POST {{host}}/Artists/DeleteArtist
+X-Api-Key: {{apiKey}}
+Authorization: Bearer {{myBearerToken}}
+Content-Type: application/json
+{
+  "id": 1
+}
+
+### Register Song
+POST {{host}}/Song/RegisterSong
+X-Api-Key: {{apiKey}}
+Authorization: Bearer {{myBearerToken}}
+Content-Type: application/json
+{
+  "name": "newsong",
+  "year": 1800,
+  "artistName": "311",
+  "shortname": "newartistName",
+  "bpm": 10,
+  "duration": 50000,
+  "genre": "newartistName",
+  "spotifyId": "newartistName",
+  "album": "newartistName"
+}
+
+### Delete Song
+POST {{host}}/Song/DeleteSong
+X-Api-Key: {{apiKey}}
+Authorization: Bearer {{myBearerToken}}
+Content-Type: application/json
+{
+  "id": 1
+}
+
+### Get Songs
+GET {{host}}/Song/GetSongsOnGenre?Genre=Metal
+X-Api-Key: {{apiKey}}
+Authorization: Bearer {{myBearerToken}}

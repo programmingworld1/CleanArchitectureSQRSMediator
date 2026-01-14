@@ -1,8 +1,0 @@
-﻿namespace Contracts.Burger
-{
-    public class BurgerResponse
-    {
-        public string Name { get; set; }
-        public string Description { get; set; }
-    }
-}

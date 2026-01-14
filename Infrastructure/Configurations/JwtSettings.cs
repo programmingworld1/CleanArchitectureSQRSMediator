@@ -1,6 +1,11 @@
-﻿namespace Infrastructure.Configurations
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Infrastructure.Configurations
 {
-    // Init = same as set, but only during initialisation values can be assigned
     public class JwtSettings
     {
         public const string SectionName = "JwtSettings";

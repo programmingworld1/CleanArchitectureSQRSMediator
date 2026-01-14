@@ -1,4 +1,4 @@
-﻿using Application.Interfaces;
+﻿using Application.InfraInterfaces;
 using Domain.Entities;
 using Infrastructure.Configurations;
 using Microsoft.Extensions.Options;
