@@ -1,6 +1,6 @@
 @host=https://localhost:7276
 @apiKey=key-1-super-secret
-@myBearerToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmMmE2YjQ0NS0wYTZiLTQ3M2UtOTFiMy0wMDRmMDgzMDRjZmYiLCJnaXZlbl9uYW1lIjoiVm9vcm5hYW0iLCJmYW1pbHlfbmFtZSI6IkFjaHRlcm5hYW0iLCJqdGkiOiJhYWJlZGRjZS1hODQxLTRlZjctODMwNS03MTkxZTQwMDYxMWEiLCJleHAiOjE3Njg2NTc1MjcsImlzcyI6Ik15LUFwaSIsImF1ZCI6Ik15LUFwaSJ9.yZ_He1oCAy5iAWAfGwoa0dPfYQAoyj0LD-NIeiwzN9U
+@myBearerToken=
 
 ### Register
 POST {{host}}/authentication/register
