@@ -1,7 +1,4 @@
 ﻿namespace Contracts.Artist
 {
-    public class ArtistFindRequest
-    {
-        public string Name { get; set; }
-    }
+    public record ArtistFindRequest(string Name);
 }

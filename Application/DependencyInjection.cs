@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Application
 {
@@ -8,6 +9,8 @@ namespace Application
         {
             services.AddMediatR(cfg =>
                 cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
+
+            services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
 
             services.AddMemoryCache();
 

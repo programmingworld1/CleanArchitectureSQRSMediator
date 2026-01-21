@@ -1,6 +1,7 @@
 ﻿using Application.InfraInterfaces;
 using Application.InfraInterfaces.Persistance;
 using Application.Mediator.LibraryImporter.Models;
+using FluentValidation;
 using MapsterMapper;
 using MediatR;
 using System.Text.Json;
@@ -12,17 +13,20 @@ namespace Application.Mediator.LibraryImporter.Commands
         private readonly IMapper _mapper;
         private readonly IArtistRepository _artistRepository;
         private readonly IGitHubClient _gitHubClient;
+        private readonly IValidator<SongJsonDto> _songValidator;
 
         private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
 
         public ImportLibraryCommandHandler(
             IMapper mapper,
             IArtistRepository artistRepository,
-            IGitHubClient gitHubClient)
+            IGitHubClient gitHubClient,
+            IValidator<SongJsonDto> songValidator)
         {
             _mapper = mapper;
             _artistRepository = artistRepository;
             _gitHubClient = gitHubClient;
+            _songValidator = songValidator;
         }
 
         public async Task Handle(ImportLibraryCommand command, CancellationToken cancellationToken)
@@ -30,10 +34,8 @@ namespace Application.Mediator.LibraryImporter.Commands
             var artistDtos = await _gitHubClient.DownloadArtistsAsync();
             var songDtos = await _gitHubClient.DownloadSongsAsync();
 
-            // haal alle artists + songs op
             var artists = await _artistRepository.GetAllArtistsIncludingSongs();
 
-            // 1) zorg dat alle artists bestaan
             foreach (var artistDto in artistDtos)
             {
                 if (string.IsNullOrWhiteSpace(artistDto.Name))
@@ -49,28 +51,30 @@ namespace Application.Mediator.LibraryImporter.Commands
                 }
             }
 
-            // 2) voeg songs toe (als ze nog niet bestaan)
             foreach (var songDto in songDtos)
             {
-                if (string.IsNullOrWhiteSpace(songDto.Name))
+                var validation = await _songValidator.ValidateAsync(songDto, cancellationToken);
+
+                if (!validation.IsValid)
+                {
+                    continue; // skip this record
+                }
+
+                if (songDto.Year >= 2016)
                     continue;
 
-                if (string.IsNullOrWhiteSpace(songDto.Artist))
+                if (string.IsNullOrWhiteSpace(songDto.Genre) ||
+                    !songDto.Genre.Contains("Metal", StringComparison.OrdinalIgnoreCase))
                     continue;
 
                 var artist = artists.FirstOrDefault(a => a.Name == songDto.Artist);
-
                 if (artist == null)
                     continue;
 
-                if (artist.Songs.Any(s => s.Name == songDto.Name))
-                    continue;
-
                 var song = _mapper.Map<Domain.Entities.Song>(songDto);
-                artist.Songs.Add(song);
+                artist.AddSong(song);
             }
 
-            // 3) alles in één keer opslaan
             await _artistRepository.CommitAsync();
         }
     }

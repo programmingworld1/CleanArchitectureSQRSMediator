@@ -1,4 +1,6 @@
-﻿using Application.InfraInterfaces.Persistance;
+﻿using Application.Errors;
+using Application.InfraInterfaces.Persistance;
+using FluentValidation;
 using MapsterMapper;
 using MediatR;
 
@@ -7,30 +9,32 @@ namespace Application.Mediator.Song.Commands
     public class SongRegisterCommandHandler : IRequestHandler<SongRegisterCommand>
     {
         private readonly IMapper _mapper;
-        private readonly ISongRepository _songRepository;
         private readonly IArtistRepository _artistRepository;
+        private readonly IValidator<SongRegisterCommand> _validator;
 
         public SongRegisterCommandHandler(IMapper mapper,
-            ISongRepository songRepository,
-            IArtistRepository artistRepository)
+            IArtistRepository artistRepository,
+            IValidator<SongRegisterCommand> validator)
         {
             _mapper = mapper;
-            _songRepository = songRepository;
             _artistRepository = artistRepository;
+            _validator = validator;
         }
 
         public async Task Handle(SongRegisterCommand command, CancellationToken cancellationToken)
         {
-            var artist = await _artistRepository.GetArtistIncludingSongs(command.ArtistName);
+            await _validator.ValidateAndThrowAsync(command, cancellationToken);
+
+            var artist = await _artistRepository.GetArtistIncludingSongs(command.ArtistName.Trim());
 
             if(artist == null)
             {
-                throw new ArgumentException("Artist does not exist");
+                throw new NotFoundException(nameof(Artist), command.ArtistName);
             }
 
             var song = _mapper.Map<Domain.Entities.Song>(command);
 
-            artist.Songs.Add(song);
+            artist.AddSong(song);
 
             await _artistRepository.CommitAsync();
         }

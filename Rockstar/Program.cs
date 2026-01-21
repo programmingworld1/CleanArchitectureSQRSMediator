@@ -11,6 +11,9 @@ builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddHttpClient();
 
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -26,7 +29,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<ErrorHandlingMiddleware>();
+//app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseExceptionHandler();
 app.UseHttpsRedirection();
 app.UseMiddleware<ApiKeyMiddleware>();
 app.UseAuthentication();

@@ -36,12 +36,7 @@ namespace Infrastructure.Services
 
             var songs = await JsonSerializer.DeserializeAsync<List<SongJsonDto>>(stream, JsonOptions);
 
-            return songs.Where(
-                x => x.Year < 2016
-                && x.Genre != null
-                && x.Genre.Contains("metal", StringComparison.OrdinalIgnoreCase))
-                .ToList();
+            return songs;
         }
     }
-
 }

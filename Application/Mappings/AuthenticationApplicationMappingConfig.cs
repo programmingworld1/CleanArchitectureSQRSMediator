@@ -1,6 +1,4 @@
-﻿using Application.Mediator.Artist.Models;
-using Application.Mediator.Authentication.Commands.Register;
-using Application.Mediator.LibraryImporter.Models;
+﻿using Application.Mediator.Authentication.Commands.Register;
 using Mapster;
 
 namespace Application.Mappings
@@ -9,9 +7,8 @@ namespace Application.Mappings
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<RegisterCommand, Domain.Entities.User>();
-            //config.NewConfig<ArtistJsonDto, Domain.Entities.Artist>()
-            //    .Ignore(x => x.Id);
+            config.NewConfig<RegisterCommand, Domain.Entities.User>()
+                .MapToConstructor(true); // because the empty ctor is private, MapToConstructor uses the public ctor and it will mapp the values from the command with the values with user only if they match name and type
         }
     }
 }

@@ -6,16 +6,11 @@ namespace Application.Mediator.Artist.Commands
 {
     public class ArtistDeleteCommandHandler : IRequestHandler<ArtistDeleteCommand>
     {
-        private readonly IMapper _mapper;
-        private readonly ISongRepository _songRepository;
         private readonly IArtistRepository _artistRepository;
 
         public ArtistDeleteCommandHandler(IMapper mapper,
-            ISongRepository songRepository,
             IArtistRepository artistRepository)
         {
-            _mapper = mapper;
-            _songRepository = songRepository;
             _artistRepository = artistRepository;
         }
 

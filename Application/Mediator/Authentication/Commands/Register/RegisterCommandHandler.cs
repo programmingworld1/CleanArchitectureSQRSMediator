@@ -25,10 +25,10 @@ namespace Application.Mediator.Authentication.Commands.Register
 
         public async Task<AuthenticationResult> Handle(RegisterCommand command, CancellationToken cancellationToken)
         {
-            if (_userRepository.GetUserByEmail(command.Email) != null)
-            {
+            //if (_userRepository.GetUserByEmail(command.Email) != null)
+            //{
                 throw new DuplicateEmailException("Email does already exists.");
-            }
+            //}
 
             if (!command.Email.EndsWith("@teamrockstars.nl", StringComparison.OrdinalIgnoreCase))
             {
@@ -41,11 +41,7 @@ namespace Application.Mediator.Authentication.Commands.Register
 
             var token = _tokenGenerator.GenerateToken(user);
 
-            return new AuthenticationResult()
-            {
-                User = user,
-                Token = token
-            };
+            return new AuthenticationResult(user, token);
         }
     }
 }

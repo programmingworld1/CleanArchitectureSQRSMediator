@@ -10,11 +10,11 @@ namespace Application.Mappings
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<SongJsonDto, Song>()
-                .Map(x => x.ArtistName, y => y.Artist)
                 .Map(x => x.Bpm, y => y.Bpm ?? 0)
                 .Ignore(x => x.Artist)
                 .Ignore(x => x.Id)
-                .Ignore(x => x.ArtistId);
+                .Ignore(x => x.ArtistId)
+                .MapToConstructor(true);
 
             config.NewConfig<Song, SongDto>();
         }

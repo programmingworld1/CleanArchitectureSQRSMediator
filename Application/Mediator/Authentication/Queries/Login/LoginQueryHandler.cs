@@ -31,11 +31,7 @@ namespace Application.Mediator.Authentication.Queries.Login
 
             var token = _tokenGenerator.GenerateToken(user);
 
-            return new AuthenticationResult()
-            {
-                User = user,
-                Token = token
-            };
+            return new AuthenticationResult(user, token);
         }
     }
 }

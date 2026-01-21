@@ -1,7 +1,5 @@
 ﻿namespace Contracts.Song
 {
-    public class SongsGetOnGenreRequest
-    {
-        public string Genre { get; set; }
-    }
+    public record SongsGetOnGenreRequest(
+        string Genre);
 }

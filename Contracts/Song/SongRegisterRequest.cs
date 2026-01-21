@@ -1,15 +1,13 @@
 ﻿namespace Contracts.Song
 {
-    public class SongRegisterRequest
-    {
-        public string Name { get; set; }
-        public int Year { get; set; }
-        public string? ArtistName { get; set; }
-        public string? Shortname { get; set; }
-        public int Bpm { get; set; }
-        public int Duration { get; set; }
-        public string? Genre { get; set; }
-        public string? SpotifyId { get; set; }
-        public string? Album { get; set; }
-    }
+    public record SongRegisterRequest(
+        string Name, 
+        int Year, 
+        string? ArtistName, 
+        string ?Shortname, 
+        int Bpm, 
+        int Duration, 
+        string? Genre, 
+        string? SpotifyId, 
+        string? Album);
 }
