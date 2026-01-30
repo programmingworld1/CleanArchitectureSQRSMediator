@@ -1,6 +1,6 @@
 ﻿namespace Application.Mediator.Artist.Commands
 {
-    public class ArtistUpdateCommand
+    public class UpdateArtistCommand
     {
         public string Name { get; set; }
     }

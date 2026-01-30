@@ -4,17 +4,17 @@ using MediatR;
 
 namespace Application.Mediator.Artist.Commands
 {
-    public class ArtistDeleteCommandHandler : IRequestHandler<ArtistDeleteCommand>
+    public class DeleteArtistCommandHandler : IRequestHandler<DeleteArtistCommand>
     {
         private readonly IArtistRepository _artistRepository;
 
-        public ArtistDeleteCommandHandler(IMapper mapper,
+        public DeleteArtistCommandHandler(IMapper mapper,
             IArtistRepository artistRepository)
         {
             _artistRepository = artistRepository;
         }
 
-        public async Task Handle(ArtistDeleteCommand command, CancellationToken cancellationToken)
+        public async Task Handle(DeleteArtistCommand command, CancellationToken cancellationToken)
         {
             var artist = await _artistRepository.GetById(command.Id);
 

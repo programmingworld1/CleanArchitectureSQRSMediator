@@ -2,7 +2,7 @@
 
 namespace Application.Mediator.Artist.Commands
 {
-    public class ArtistDeleteCommand : IRequest
+    public class DeleteArtistCommand : IRequest
     {
         public int Id { get; set; }
     }

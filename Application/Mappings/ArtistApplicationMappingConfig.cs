@@ -8,9 +8,9 @@ namespace Application.Mappings
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Domain.Entities.Artist, Mediator.Artist.Models.Artist>();
+            config.NewConfig<Domain.Entities.Artist, Mediator.Artist.Models.FindArtistResult>();
 
-            config.NewConfig<ArtistRegisterItem, Domain.Entities.Artist>()
+            config.NewConfig<CreateArtistItem, Domain.Entities.Artist>()
                 .MapToConstructor(true);
 
             config.NewConfig<ArtistJsonDto, Domain.Entities.Artist>()

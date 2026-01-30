@@ -2,7 +2,7 @@
 
 namespace Application.Mediator.Song.Commands
 {
-    public class SongRegisterCommand : IRequest
+    public class CreateSongCommand : IRequest
     {
         public required string Name { get; set; }
         public required string ArtistName { get; set; }

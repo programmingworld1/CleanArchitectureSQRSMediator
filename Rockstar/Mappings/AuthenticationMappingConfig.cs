@@ -10,7 +10,7 @@ namespace Rockstar.Mappings
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<RegisterRequest, RegisterCommand>();
+            config.NewConfig<RegisterRequest, CreateUserCommand>();
 
             config.NewConfig<LoginRequest, LoginQuery>();
 

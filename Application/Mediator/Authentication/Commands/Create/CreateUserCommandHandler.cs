@@ -2,18 +2,19 @@
 using Application.InfraInterfaces;
 using Application.InfraInterfaces.Persistance;
 using Application.Mediator.Authentication.Models;
+using Application.Result;
 using Domain.Entities;
 using MapsterMapper;
 using MediatR;
 
-namespace Application.Mediator.Authentication.Commands.Register
+namespace Application.Mediator.Authentication.Commands.Create
 {
-    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, AuthenticationResult>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result<AuthenticationResult>>
     {
         private readonly IMapper _mapper;
         private readonly IJwtTokenGenerator _tokenGenerator;
         private readonly IUserRepository _userRepository;
-        public RegisterCommandHandler(
+        public CreateUserCommandHandler(
             IMapper mapper,
             IJwtTokenGenerator tokenGenerator, 
             IUserRepository userRepository)
@@ -23,12 +24,17 @@ namespace Application.Mediator.Authentication.Commands.Register
             _tokenGenerator = tokenGenerator;
         }
 
-        public async Task<AuthenticationResult> Handle(RegisterCommand command, CancellationToken cancellationToken)
+        public async Task<Result<AuthenticationResult>> Handle(CreateUserCommand command, CancellationToken cancellationToken)
         {
-            //if (_userRepository.GetUserByEmail(command.Email) != null)
-            //{
-                throw new DuplicateEmailException("Email does already exists.");
-            //}
+            if (_userRepository.GetUserByEmail(command.Email) != null)
+            {
+                return Result<AuthenticationResult>.Failure(
+                    new Error(
+                        "EmailAlreadyExists",
+                        "This email address is already in use."
+                    )
+                );
+            }
 
             if (!command.Email.EndsWith("@teamrockstars.nl", StringComparison.OrdinalIgnoreCase))
             {
@@ -41,7 +47,7 @@ namespace Application.Mediator.Authentication.Commands.Register
 
             var token = _tokenGenerator.GenerateToken(user);
 
-            return new AuthenticationResult(user, token);
+            return Result<AuthenticationResult>.Success(new AuthenticationResult(user, token));
         }
     }
 }

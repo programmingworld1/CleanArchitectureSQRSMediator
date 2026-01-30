@@ -1,4 +1,4 @@
-﻿using Application.Mediator.Authentication.Commands.Register;
+﻿using Application.Mediator.Authentication.Commands.Create;
 using Application.Mediator.Authentication.Queries.Login;
 using Contracts.Authentication;
 using MapsterMapper;
@@ -26,19 +26,32 @@ namespace Rockstar.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register(Contracts.Authentication.RegisterRequest request)
+        public async Task<IActionResult> Register(RegisterRequest request)
         {
-            var command = _mapper.Map<RegisterCommand>(request);
+            var command = _mapper.Map<CreateUserCommand>(request);
 
             var result = await _mediator.Send(command);
 
-            var response = _mapper.Map<AuthenticationResponse>(result);
+            if(!result.IsSuccess)
+            {
+                var pd = BusinessProblemDetailsFactory.Create(
+                     HttpContext,
+                     result.Error!
+                 );
+
+                return new ObjectResult(pd)
+                {
+                    StatusCode = pd.Status
+                };
+            }
+
+            var response = _mapper.Map<AuthenticationResponse>(result.Value);
 
             return Ok(response);
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login(Contracts.Authentication.LoginRequest request)
+        public async Task<IActionResult> Login(LoginRequest request)
         {
             var query = _mapper.Map<LoginQuery>(request);
 

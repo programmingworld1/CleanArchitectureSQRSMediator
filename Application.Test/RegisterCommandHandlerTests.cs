@@ -15,9 +15,9 @@ namespace Application.Test
         private readonly Mock<IJwtTokenGenerator> _tokenGeneratorMock = new();
         private readonly Mock<IUserRepository> _userRepositoryMock = new();
 
-        private RegisterCommandHandler CreateHandler()
+        private CreateUserCommandHandler CreateHandler()
         {
-            return new RegisterCommandHandler(
+            return new CreateUserCommandHandler(
                 _mapsterMapperMock.Object,
                 _tokenGeneratorMock.Object,
                 _userRepositoryMock.Object);
@@ -27,7 +27,7 @@ namespace Application.Test
         public async Task Handle_RegisterCommand_AddUser()
         {
             // Arrange
-            var command = new RegisterCommand 
+            var command = new CreateUserCommand 
             { 
                 Email = "test@teamrockstars.nl", 
                 FirstName = "FirstName", 
@@ -40,8 +40,8 @@ namespace Application.Test
                 .Returns((User?)null);
 
             _mapsterMapperMock
-                .Setup(m => m.Map<User>(It.IsAny<RegisterCommand>()))
-                .Returns((RegisterCommand c) => new User
+                .Setup(m => m.Map<User>(It.IsAny<CreateUserCommand>()))
+                .Returns((CreateUserCommand c) => new User
                 {
                     Email = c.Email,
                     FirstName = c.FirstName,
@@ -75,7 +75,7 @@ namespace Application.Test
         public async Task Handle_WrongEmail_ThrowsWrongEmailException(string email)
         {
             // Arrange
-            var command = new RegisterCommand { Email = email };
+            var command = new CreateUserCommand { Email = email };
 
             _userRepositoryMock
                 .Setup(repo => repo.GetUserByEmail(command.Email))
@@ -92,7 +92,7 @@ namespace Application.Test
         public async Task Handle_UserAlreadyExits_ThrowsDuplicateEmailException()
         {
             // Arrange
-            var command = new RegisterCommand { Email = "test@teamrockstars.nl" };
+            var command = new CreateUserCommand { Email = "test@teamrockstars.nl" };
 
             _userRepositoryMock
                 .Setup(repo => repo.GetUserByEmail(command.Email))

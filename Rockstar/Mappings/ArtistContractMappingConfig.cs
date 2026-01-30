@@ -11,9 +11,9 @@ namespace Rockstar.Mappings
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<ArtistRegisterRequest, ArtistRegisterItem>();
-            config.NewConfig<ArtistDeleteRequest, ArtistDeleteCommand>();
-            config.NewConfig<ArtistFindRequest, ArtistFindQuery>();
+            config.NewConfig<ArtistRegisterRequest, CreateArtistItem>();
+            config.NewConfig<ArtistDeleteRequest, DeleteArtistCommand>();
+            config.NewConfig<ArtistFindRequest, FindArtistQuery>();
         }
     }
 }

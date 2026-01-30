@@ -1,6 +1,6 @@
 ﻿namespace Application.Mediator.Song.Models
 {
-    public class SongResult
+    public class GetSongsByGenreResult
     {
         public List<SongDto> Songs { get; set; }
     }

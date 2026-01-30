@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Application.Mediator.Song.Validators
 {
-    public class SongRegisterCommandValidator : AbstractValidator<SongRegisterCommand>
+    public class SongRegisterCommandValidator : AbstractValidator<CreateSongCommand>
     {
         public SongRegisterCommandValidator()
         {

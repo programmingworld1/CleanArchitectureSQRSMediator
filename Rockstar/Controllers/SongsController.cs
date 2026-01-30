@@ -41,10 +41,10 @@ namespace Rockstar.Controllers
             return Ok(result);
         }
 
-        [HttpPost("RegisterSong")]
-        public async Task<IActionResult> Register(SongRegisterRequest request)
+        [HttpPost("CreateSong")]
+        public async Task<IActionResult> Create(SongRegisterRequest request)
         {
-            var command = _mapper.Map<SongRegisterCommand>(request);
+            var command = _mapper.Map<CreateSongCommand>(request);
 
             await _mediator.Send(command);
 
@@ -54,7 +54,7 @@ namespace Rockstar.Controllers
         [HttpPost("DeleteSong")]
         public async Task<IActionResult> Delete(SongDeleteRequest request)
         {
-            var command = _mapper.Map<SongDeleteCommand>(request);
+            var command = _mapper.Map<DeleteSongCommand>(request);
 
             await _mediator.Send(command);
 

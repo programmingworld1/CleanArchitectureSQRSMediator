@@ -9,8 +9,8 @@ namespace Rockstar.Mappings
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<SongRegisterRequest, SongRegisterCommand>();
-            config.NewConfig<SongDeleteRequest, SongDeleteCommand>();
+            config.NewConfig<SongRegisterRequest, CreateSongCommand>();
+            config.NewConfig<SongDeleteRequest, DeleteSongCommand>();
             config.NewConfig<SongsGetOnGenreRequest, SongsGetOnGenreRequest>();
         }
     }

@@ -6,22 +6,22 @@ using MediatR;
 
 namespace Application.Mediator.Song.Commands
 {
-    public class SongRegisterCommandHandler : IRequestHandler<SongRegisterCommand>
+    public class CreateSongCommandHandler : IRequestHandler<CreateSongCommand>
     {
         private readonly IMapper _mapper;
         private readonly IArtistRepository _artistRepository;
-        private readonly IValidator<SongRegisterCommand> _validator;
+        private readonly IValidator<CreateSongCommand> _validator;
 
-        public SongRegisterCommandHandler(IMapper mapper,
+        public CreateSongCommandHandler(IMapper mapper,
             IArtistRepository artistRepository,
-            IValidator<SongRegisterCommand> validator)
+            IValidator<CreateSongCommand> validator)
         {
             _mapper = mapper;
             _artistRepository = artistRepository;
             _validator = validator;
         }
 
-        public async Task Handle(SongRegisterCommand command, CancellationToken cancellationToken)
+        public async Task Handle(CreateSongCommand command, CancellationToken cancellationToken)
         {
             await _validator.ValidateAndThrowAsync(command, cancellationToken);
 

@@ -4,18 +4,18 @@ using MediatR;
 
 namespace Application.Mediator.Artist.Commands
 {
-    public class ArtistsRegisterCommandHandler : IRequestHandler<ArtistsRegisterCommand>
+    public class CreateArtistsCommandHandler : IRequestHandler<CreateArtistsCommand>
     {
         private readonly IMapper _mapper;
         private readonly IArtistRepository _artistRepository;
-        public ArtistsRegisterCommandHandler(IMapper mapper, 
+        public CreateArtistsCommandHandler(IMapper mapper, 
             IArtistRepository artistRepository)
         {
             _mapper = mapper;
             _artistRepository = artistRepository;
         }
 
-        public async Task Handle(ArtistsRegisterCommand command, CancellationToken cancellationToken)
+        public async Task Handle(CreateArtistsCommand command, CancellationToken cancellationToken)
         {
             var domainArtists = _mapper.Map<List<Domain.Entities.Artist>>(command.Artists);
 

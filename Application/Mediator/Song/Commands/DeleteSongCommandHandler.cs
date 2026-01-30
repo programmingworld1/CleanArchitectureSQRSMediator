@@ -4,13 +4,13 @@ using MediatR;
 
 namespace Application.Mediator.Song.Commands
 {
-    public class SongDeleteCommandHandler : IRequestHandler<SongDeleteCommand>
+    public class DeleteSongCommandHandler : IRequestHandler<DeleteSongCommand>
     {
         private readonly IMapper _mapper;
         private readonly ISongRepository _songRepository;
         private readonly IArtistRepository _artistRepository;
 
-        public SongDeleteCommandHandler(IMapper mapper,
+        public DeleteSongCommandHandler(IMapper mapper,
             ISongRepository songRepository,
             IArtistRepository artistRepository)
         {
@@ -19,7 +19,7 @@ namespace Application.Mediator.Song.Commands
             _artistRepository = artistRepository;
         }
 
-        public async Task Handle(SongDeleteCommand command, CancellationToken cancellationToken)
+        public async Task Handle(DeleteSongCommand command, CancellationToken cancellationToken)
         {
             var song = await _songRepository.GetById(command.Id);
 

@@ -6,7 +6,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace Application.Mediator.Song.Queries
 {
-    public class GetSongsByGenreQueryHandler : IRequestHandler<GetSongsByGenreQuery, SongResult>
+    public class GetSongsByGenreQueryHandler : IRequestHandler<GetSongsByGenreQuery, GetSongsByGenreResult>
     {
         private readonly ISongRepository _songRepository;
         private readonly IMapper _mapper;
@@ -22,12 +22,12 @@ namespace Application.Mediator.Song.Queries
             _cache = cache;
         }
 
-        public async Task<SongResult> Handle(GetSongsByGenreQuery request, CancellationToken cancellationToken)
+        public async Task<GetSongsByGenreResult> Handle(GetSongsByGenreQuery request, CancellationToken cancellationToken)
         {
             var cacheKey = $"songs:genre:{request.Genre.ToLowerInvariant()}";
 
             // 1️⃣ Eerst cache checken
-            if (_cache.TryGetValue(cacheKey, out SongResult cached))
+            if (_cache.TryGetValue(cacheKey, out GetSongsByGenreResult cached))
             {
                 return cached;
             }
@@ -36,7 +36,7 @@ namespace Application.Mediator.Song.Queries
 
             var songDtos = _mapper.Map<List<SongDto>>(songs);
 
-            var response = new SongResult()
+            var response = new GetSongsByGenreResult()
             {
                 Songs = songDtos
             };

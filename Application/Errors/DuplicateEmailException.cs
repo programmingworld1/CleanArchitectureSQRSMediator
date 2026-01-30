@@ -5,6 +5,6 @@ namespace Application.Errors
     public class DuplicateEmailException : HttpException
     {
         public DuplicateEmailException(string message)
-            : base(StatusCodes.Status409Conflict, "DuplicateEmail", message) { }
+            : base(StatusCodes.Status409Conflict, "EmailAlreadyExists", message) { }
     }
 }

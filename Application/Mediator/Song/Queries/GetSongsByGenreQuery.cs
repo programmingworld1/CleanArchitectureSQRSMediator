@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Mediator.Song.Queries
 {
-    public class GetSongsByGenreQuery : IRequest<SongResult>
+    public class GetSongsByGenreQuery : IRequest<GetSongsByGenreResult>
     {
         public string Genre { get; set; }
     }

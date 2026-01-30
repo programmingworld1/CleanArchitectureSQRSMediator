@@ -1,6 +1,6 @@
 ﻿namespace Application.Mediator.Artist.Models
 {
-    public class ArtistRegisterItem
+    public class CreateArtistItem
     {
         public required string Name { get; init; }
     }
