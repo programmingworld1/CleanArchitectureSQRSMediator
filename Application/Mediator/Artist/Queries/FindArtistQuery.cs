@@ -2,8 +2,5 @@
 
 namespace Application.Mediator.Artist.Queries
 {
-    public class FindArtistQuery : IRequest<Models.FindArtistResult>
-    {
-        public string Name { get; set; }
-    }
+    public record FindArtistQuery(string Name) : IRequest<Models.FindArtistResult>;
 }

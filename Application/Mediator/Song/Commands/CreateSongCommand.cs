@@ -2,16 +2,15 @@
 
 namespace Application.Mediator.Song.Commands
 {
-    public class CreateSongCommand : IRequest
-    {
-        public required string Name { get; set; }
-        public required string ArtistName { get; set; }
-        public int Year { get; set; }
-        public int Bpm { get; set; }
-        public int Duration { get; set; }
-        public string? Shortname { get; set; }
-        public string? Genre { get; set; }
-        public string? SpotifyId { get; set; }
-        public string? Album { get; set; }
-    }
+    public record CreateSongCommand(
+        string Name,
+        string ArtistName,
+        int Year,
+        int Bpm,
+        int Duration,
+        string? Shortname,
+        string? Genre,
+        string? SpotifyId,
+        string? Album
+    ) : IRequest;
 }

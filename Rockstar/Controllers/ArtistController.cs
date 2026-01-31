@@ -2,7 +2,6 @@
 using Application.Mediator.Artist.Models;
 using Application.Mediator.Artist.Queries;
 using Application.Mediator.LibraryImporter.Commands;
-using Application.Mediator.Song.Commands;
 using Contracts.Artist;
 using MapsterMapper;
 using MediatR;
@@ -14,12 +13,12 @@ namespace Rockstar.Controllers
     [ApiController]
     [Route("api/artists")]
     [Authorize]
-    public class ArtistsController : ControllerBase
+    public class ArtistController : ControllerBase
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
-        public ArtistsController(
+        public ArtistController(
             IMediator mediator,
             IMapper mapper)
         {
@@ -31,7 +30,7 @@ namespace Rockstar.Controllers
         [ProducesResponseType(typeof(FindArtistResult), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Import([FromQuery] FindArtistRequest request)
+        public async Task<IActionResult> Get([FromQuery] FindArtistRequest request)
         {
             var query = _mapper.Map<FindArtistQuery>(request);
 
@@ -40,7 +39,7 @@ namespace Rockstar.Controllers
             return Ok(result);
         }
 
-        [HttpPut("Import")]
+        [HttpPut("import")]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -74,14 +73,11 @@ namespace Rockstar.Controllers
         {
             var items = _mapper.Map<List<CreateArtistItem>>(request);
 
-            var command = new CreateArtistsCommand()
-            {
-                Artists = items
-            };
+            var command = new CreateArtistsCommand(items);
 
             await _mediator.Send(command);
 
-            return Ok();
+            return Created();
         }
 
         [HttpDelete("{id:int}")]
@@ -91,14 +87,36 @@ namespace Rockstar.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(int id)
         {
-            var command = new DeleteArtistCommand
-            {
-                Id = id
-            };
+            var command = new DeleteArtistCommand(id);
 
             await _mediator.Send(command);
 
-            return Ok();
+            return NoContent();
         }
+
+        // Restfull = API that follows the REST-principles.
+        // Use the correct HTTP-method: GET (only read), PUT(replace fully), PATCH(replace partly), POST (create or an action), DELETE
+        // API should be stateless, so each requestcontains all info the server needs
+        // in the route, use plural "api/artists instead of api/artist"
+        // Correct status codes:
+            //•	200 OK - Succesvolle GET/PUT/PATCH
+            //•	201 Created - Resource succesvol aangemaakt(bij POST)
+            //•	204 No Content - Succesvolle DELETE(geen body)
+            //•	400 Bad Request - Validatie error
+            //•	401 Unauthorized - Niet geauthenticeerd
+            //•	403 Forbidden - Niet geautoriseerd
+            //•	404 Not Found - Resource niet gevonden
+            //•	409 Conflict - Conflict(bv.duplicate)
+            //•	422 Unprocessable Entity - Validatie error(alternatief voor 400)
+            //•	500 Internal Server Error - Server fout
+        // 201 Created: provide location and body (recommended)
+        // No state change via GET
+        // Delete/GET/PUT needs to be indempotent: result is always the same if you call it multiple times
+        // query parameter for filtering and paging
+        // No server side sessions state
+        // versioning
+        // Lower naming routes
+        // Self descriptive: ProblemDetails
+
     }
 }

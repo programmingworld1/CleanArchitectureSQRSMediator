@@ -3,8 +3,5 @@ using MediatR;
 
 namespace Application.Mediator.Artist.Commands
 {
-    public class CreateArtistsCommand : IRequest
-    {
-        public List<CreateArtistItem> Artists { get; set; }
-    }
+    public record CreateArtistsCommand(List<CreateArtistItem> Artists) : IRequest;
 }

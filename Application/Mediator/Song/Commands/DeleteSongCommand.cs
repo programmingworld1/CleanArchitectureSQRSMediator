@@ -3,8 +3,5 @@ using Application.ApplicationResult;
 
 namespace Application.Mediator.Song.Commands
 {
-    public class DeleteSongCommand : IRequest<Result> 
-    {
-        public int Id { get; set; }
-    }
+    public record DeleteSongCommand(int Id) : IRequest<Result>;
 }

@@ -26,6 +26,7 @@ namespace Rockstar.Controllers
         }
 
         [HttpGet]
+        // Document all possible outcomes of this endpoint in swagger
         [ProducesResponseType(typeof(GetSongsByGenreResult), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -59,10 +60,7 @@ namespace Rockstar.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(int id)
         {
-            var command = new DeleteSongCommand
-            {
-                Id = id
-            };
+            var command = new DeleteSongCommand(id);
 
             await _mediator.Send(command);
 
