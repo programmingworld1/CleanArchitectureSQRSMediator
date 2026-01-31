@@ -2,6 +2,7 @@
 using Application.Mediator.Artist.Models;
 using Application.Mediator.Artist.Queries;
 using Application.Mediator.LibraryImporter.Commands;
+using Application.Mediator.Song.Commands;
 using Contracts.Artist;
 using MapsterMapper;
 using MediatR;
@@ -11,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Rockstar.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/artists")]
     [Authorize]
     public class ArtistsController : ControllerBase
     {
@@ -26,8 +27,11 @@ namespace Rockstar.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("GetArtist")]
-        public async Task<IActionResult> Import([FromQuery] ArtistFindRequest request)
+        [HttpGet]
+        [ProducesResponseType(typeof(FindArtistResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Import([FromQuery] FindArtistRequest request)
         {
             var query = _mapper.Map<FindArtistQuery>(request);
 
@@ -37,6 +41,9 @@ namespace Rockstar.Controllers
         }
 
         [HttpPut("Import")]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Import()
         {
             var command = new ImportLibraryCommand();
@@ -58,8 +65,12 @@ namespace Rockstar.Controllers
             return Accepted();
         }
 
-        [HttpPost("RegisterArtists")]
-        public async Task<IActionResult> Register(List<ArtistRegisterRequest> request)
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Create(List<CreateArtistRequest> request)
         {
             var items = _mapper.Map<List<CreateArtistItem>>(request);
 
@@ -73,10 +84,17 @@ namespace Rockstar.Controllers
             return Ok();
         }
 
-        [HttpPost("DeleteArtist")]
-        public async Task<IActionResult> Delete(ArtistDeleteRequest request)
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Delete(int id)
         {
-            var command = _mapper.Map<DeleteArtistCommand>(request);
+            var command = new DeleteArtistCommand
+            {
+                Id = id
+            };
 
             await _mediator.Send(command);
 

@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace Application.Errors
+﻿namespace Application.Errors
 {
     public class WrongEmailException : HttpException
     {
         public WrongEmailException(string message)
-            : base(StatusCodes.Status409Conflict, "WrongEmail", message) { }
+            : base("WrongEmail", message) { }
     }
 }

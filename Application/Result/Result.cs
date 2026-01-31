@@ -1,5 +1,6 @@
-﻿namespace Application.Result
+﻿namespace Application.ApplicationResult
 {
+    // Voor operations with return value
     public class Result<T>
     {
         public bool IsSuccess { get; }
@@ -13,7 +14,37 @@
             Error = error;
         }
 
-        public static Result<T> Success(T value) => new(true, value, null);
-        public static Result<T> Failure(Error error) => new(false, default, error);
+        public static Result<T> Success(T value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            return new(true, value, null);
+        }
+
+        public static Result<T> Failure(Error error)
+        {
+            ArgumentNullException.ThrowIfNull(error);
+            return new(false, default, error);
+        }
+    }
+
+    // Voor operations without return value
+    public class Result
+    {
+        public bool IsSuccess { get; }
+        public Error? Error { get; }
+
+        private Result(bool isSuccess, Error? error)
+        {
+            IsSuccess = isSuccess;
+            Error = error;
+        }
+
+        public static Result Success() => new(true, null);
+
+        public static Result Failure(Error error)
+        {
+            ArgumentNullException.ThrowIfNull(error);
+            return new(false, error);
+        }
     }
 }

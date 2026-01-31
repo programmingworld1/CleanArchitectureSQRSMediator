@@ -1,4 +1,4 @@
-﻿using Application.Mediator.Authentication.Commands.Register;
+﻿using Application.Mediator.Authentication.Commands.Create;
 using Mapster;
 
 namespace Application.Mappings

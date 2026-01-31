@@ -1,5 +1,5 @@
 ﻿namespace Contracts.Artist
 {
-    public record ArtistDeleteRequest(
+    public record DeleteArtistRequest(
         int Id);
 }

@@ -1,4 +1,4 @@
-﻿using Application.Mediator.Authentication.Commands.Register;
+﻿using Application.Mediator.Authentication.Commands.Create;
 using Application.Mediator.Authentication.Models;
 using Application.Mediator.Authentication.Queries.Login;
 using Contracts.Authentication;
@@ -10,7 +10,7 @@ namespace Rockstar.Mappings
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<RegisterRequest, CreateUserCommand>();
+            config.NewConfig<CreateUserRequest, CreateUserCommand>();
 
             config.NewConfig<LoginRequest, LoginQuery>();
 

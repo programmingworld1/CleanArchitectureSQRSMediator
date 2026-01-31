@@ -1,7 +1,7 @@
 ﻿using Application.Errors;
 using Application.InfraInterfaces;
 using Application.InfraInterfaces.Persistance;
-using Application.Mediator.Authentication.Commands.Register;
+using Application.Mediator.Authentication.Commands.Create;
 using Domain.Entities;
 using MapsterMapper;
 using Moq;
@@ -42,12 +42,12 @@ namespace Application.Test
             _mapsterMapperMock
                 .Setup(m => m.Map<User>(It.IsAny<CreateUserCommand>()))
                 .Returns((CreateUserCommand c) => new User
-                {
-                    Email = c.Email,
-                    FirstName = c.FirstName,
-                    LastName = c.LastName,
-                    Password = c.Password
-                });
+                (
+                    c.Email,
+                    c.FirstName,
+                    c.LastName,
+                    c.Password
+                ));
 
             var handler = CreateHandler();
 
@@ -64,7 +64,7 @@ namespace Application.Test
                 Times.Once
             );
 
-            Assert.Equal(command.Email, result.User.Email);
+            Assert.Equal(command.Email, result.Value.User.Email);
         }
 
         [Theory]
@@ -75,7 +75,7 @@ namespace Application.Test
         public async Task Handle_WrongEmail_ThrowsWrongEmailException(string email)
         {
             // Arrange
-            var command = new CreateUserCommand { Email = email };
+            var command = new CreateUserCommand { Email = email, FirstName = null, LastName = null, Password = null };
 
             _userRepositoryMock
                 .Setup(repo => repo.GetUserByEmail(command.Email))
@@ -92,11 +92,11 @@ namespace Application.Test
         public async Task Handle_UserAlreadyExits_ThrowsDuplicateEmailException()
         {
             // Arrange
-            var command = new CreateUserCommand { Email = "test@teamrockstars.nl" };
+            var command = new CreateUserCommand { Email = "test@teamrockstars.nl", FirstName = null, LastName = null, Password = null };
 
             _userRepositoryMock
                 .Setup(repo => repo.GetUserByEmail(command.Email))
-                .Returns(new Domain.Entities.User());
+                .Returns(new User("", "", "test@teamrockstars.nl", null));
 
             var handler = CreateHandler();
 

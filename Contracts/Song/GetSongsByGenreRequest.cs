@@ -1,5 +1,5 @@
 ﻿namespace Contracts.Song
 {
-    public record SongsGetOnGenreRequest(
+    public record GetSongsByGenreRequest(
         string Genre);
 }

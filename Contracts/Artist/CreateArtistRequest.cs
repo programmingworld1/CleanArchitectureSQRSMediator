@@ -1,5 +1,5 @@
 ﻿namespace Contracts.Artist
 {
-    public record ArtistRegisterRequest(
+    public record CreateArtistRequest(
         string Name);
 }

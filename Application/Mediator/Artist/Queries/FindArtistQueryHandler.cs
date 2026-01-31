@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Mediator.Artist.Queries
 {
-    public class FindArtistQueryHandler : IRequestHandler<FindArtistQuery, Artist.Models.FindArtistResult>
+    public class FindArtistQueryHandler : IRequestHandler<FindArtistQuery, Models.FindArtistResult>
     {
         private readonly IMapper _mapper;
         private readonly IArtistRepository _artistRepository;
@@ -16,7 +16,7 @@ namespace Application.Mediator.Artist.Queries
             _artistRepository = artistRepository;
         }
 
-        public async Task<Artist.Models.FindArtistResult> Handle(FindArtistQuery request, CancellationToken cancellationToken)
+        public async Task<Models.FindArtistResult> Handle(FindArtistQuery request, CancellationToken cancellationToken)
         {
             var artists = await _artistRepository.GetAll(x => x.Name == request.Name);
 

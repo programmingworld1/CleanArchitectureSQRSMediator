@@ -4,29 +4,34 @@ using Contracts.Authentication;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Rockstar.Middlewares;
 
 namespace Rockstar.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/authentication")]
     public class AuthenticationController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ILogger<AuthenticationController> _logger;
         private readonly IMapper _mapper;
+        private readonly BusinessProblemDetailsFactory _problemDetailsFactory;
 
         public AuthenticationController(
             IMediator mediator,
-            ILogger<AuthenticationController> logger,
-            IMapper mapper)
+            IMapper mapper,
+            BusinessProblemDetailsFactory problemDetailsFactory)
         {
             _mediator = mediator;
-            _logger = logger;
             _mapper = mapper;
+            _problemDetailsFactory = problemDetailsFactory;
         }
 
-        [HttpPost("Register")]
-        public async Task<IActionResult> Register(RegisterRequest request)
+        [HttpPost("create")]
+        [ProducesResponseType(typeof(AuthenticationResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Create(CreateUserRequest request)
         {
             var command = _mapper.Map<CreateUserCommand>(request);
 
@@ -34,7 +39,7 @@ namespace Rockstar.Controllers
 
             if(!result.IsSuccess)
             {
-                var pd = BusinessProblemDetailsFactory.Create(
+                var pd = _problemDetailsFactory.Create(
                      HttpContext,
                      result.Error!
                  );
@@ -45,12 +50,16 @@ namespace Rockstar.Controllers
                 };
             }
 
-            var response = _mapper.Map<AuthenticationResponse>(result.Value);
+            var response = _mapper.Map<AuthenticationResponse>(result.Value!);
 
             return Ok(response);
         }
 
-        [HttpPost("Login")]
+        [HttpPost("login")]
+        [ProducesResponseType(typeof(AuthenticationResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Login(LoginRequest request)
         {
             var query = _mapper.Map<LoginQuery>(request);

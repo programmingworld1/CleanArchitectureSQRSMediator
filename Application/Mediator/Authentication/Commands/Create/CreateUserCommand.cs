@@ -1,5 +1,5 @@
-﻿using Application.Mediator.Authentication.Models;
-using Application.Result;
+﻿using Application.ApplicationResult;
+using Application.Mediator.Authentication.Models;
 using MediatR;
 
 namespace Application.Mediator.Authentication.Commands.Create

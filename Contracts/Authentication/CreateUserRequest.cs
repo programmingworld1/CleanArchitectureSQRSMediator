@@ -1,6 +1,6 @@
 ﻿namespace Contracts.Authentication
 {
-    public record RegisterRequest(
+    public record CreateUserRequest(
         string FirstName, 
         string LastName, 
         string Email, 

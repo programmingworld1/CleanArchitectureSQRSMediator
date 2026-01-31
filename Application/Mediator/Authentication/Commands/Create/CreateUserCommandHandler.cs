@@ -1,8 +1,7 @@
-﻿using Application.Errors;
+﻿using Application.ApplicationResult;
 using Application.InfraInterfaces;
 using Application.InfraInterfaces.Persistance;
 using Application.Mediator.Authentication.Models;
-using Application.Result;
 using Domain.Entities;
 using MapsterMapper;
 using MediatR;
@@ -26,6 +25,16 @@ namespace Application.Mediator.Authentication.Commands.Create
 
         public async Task<Result<AuthenticationResult>> Handle(CreateUserCommand command, CancellationToken cancellationToken)
         {
+            if (!command.Email.EndsWith("@teamrockstars.nl", StringComparison.OrdinalIgnoreCase))
+            {
+                return Result<AuthenticationResult>.Failure(
+                    new Error(
+                        "WrongEmail",
+                        "Invalid e-mail. Only rockstarts can register."
+                    )
+                );
+            }
+
             if (_userRepository.GetUserByEmail(command.Email) != null)
             {
                 return Result<AuthenticationResult>.Failure(
@@ -34,11 +43,6 @@ namespace Application.Mediator.Authentication.Commands.Create
                         "This email address is already in use."
                     )
                 );
-            }
-
-            if (!command.Email.EndsWith("@teamrockstars.nl", StringComparison.OrdinalIgnoreCase))
-            {
-                throw new WrongEmailException("Invalid e-mail. Only rockstarts can register.");
             }
 
             var user = _mapper.Map<User>(command);

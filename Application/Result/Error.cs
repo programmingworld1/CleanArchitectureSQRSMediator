@@ -1,4 +1,4 @@
-﻿namespace Application.Result
+﻿namespace Application.ApplicationResult
 {
     public record Error(string Code, string Message);
 }

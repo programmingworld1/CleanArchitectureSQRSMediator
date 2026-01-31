@@ -1,6 +1,6 @@
 ﻿namespace Application.Mediator.Artist.Models
 {
-    public class Artist
+    public class FindArtistResult
     {
         public int Id { get; set; }
         public string Name { get; set; }

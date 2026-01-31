@@ -1,36 +1,41 @@
-﻿using Application.InfraInterfaces.Persistance;
-using MapsterMapper;
+﻿using Application.ApplicationResult;
+using Application.InfraInterfaces.Persistance;
 using MediatR;
 
 namespace Application.Mediator.Song.Commands
 {
-    public class DeleteSongCommandHandler : IRequestHandler<DeleteSongCommand>
+    public class DeleteSongCommandHandler : IRequestHandler<DeleteSongCommand, Result>
     {
-        private readonly IMapper _mapper;
         private readonly ISongRepository _songRepository;
         private readonly IArtistRepository _artistRepository;
 
-        public DeleteSongCommandHandler(IMapper mapper,
+        public DeleteSongCommandHandler(
             ISongRepository songRepository,
             IArtistRepository artistRepository)
         {
-            _mapper = mapper;
             _songRepository = songRepository;
             _artistRepository = artistRepository;
         }
 
-        public async Task Handle(DeleteSongCommand command, CancellationToken cancellationToken)
+        public async Task<Result> Handle(DeleteSongCommand command, CancellationToken cancellationToken)
         {
             var song = await _songRepository.GetById(command.Id);
 
             if (song == null)
             {
-                throw new ArgumentException("Song does not exist");
+                return Result.Failure(
+                    new Error(
+                        "SongNotFound",
+                        $"Song with ID {command.Id} was not found."
+                    )
+                );
             }
 
             _songRepository.Delete(song);
 
             await _artistRepository.CommitAsync();
+
+            return Result.Success();
         }
     }
 }

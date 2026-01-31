@@ -1,6 +1,6 @@
 ﻿namespace Contracts.Song
 {
-    public record SongRegisterRequest(
+    public record CreateSongRequest(
         string Name, 
         int Year, 
         string? ArtistName, 

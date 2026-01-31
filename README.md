@@ -1,5 +1,3 @@
-# Rockstar
-
 - This project is of type: ASP.NET CORE API
 
 - Stap 0, open solution in VS.

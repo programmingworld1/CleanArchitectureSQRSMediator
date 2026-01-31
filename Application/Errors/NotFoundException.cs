@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace Application.Errors
+﻿namespace Application.Errors
 {
     internal class NotFoundException : HttpException
     {
@@ -8,7 +6,7 @@ namespace Application.Errors
         public object Key { get; }
 
         public NotFoundException(string resource, object key)
-            : base(StatusCodes.Status404NotFound, "NotFound", $"{resource} '{key}' was not found.")
+            : base("NotFound", $"{resource} '{key}' was not found.")
         {
             Resource = resource;
             Key = key;
