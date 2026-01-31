@@ -1,1 +1,35 @@
+name: CI
 
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# A job runs on 1 machine. Everything inside that jobs runs in order, 1 by 1.
+# jobs can run parallel (so job1 and job2 could run parallel), and they can also be dependent on each other.
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+      # This gets the code. It's written by Github. It it like "clone repo.."
+      # because the job runs on a VM, but that machine doesnt have the code, or any dependency installed
+        uses: actions/checkout@v4
+
+      # install dotnet on the machine
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      # run is a shell command,as if you type it in terminal
+      - name: Restore
+        run: dotnet restore Rockstar.sln
+
+      - name: Build
+        run: dotnet build Rockstar.sln --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test Rockstar.sln --configuration Release --no-build --verbosity normal
