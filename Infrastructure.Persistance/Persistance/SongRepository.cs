@@ -1,6 +1,5 @@
 ﻿using Application.InfraInterfaces.Persistance;
 using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistance
 {

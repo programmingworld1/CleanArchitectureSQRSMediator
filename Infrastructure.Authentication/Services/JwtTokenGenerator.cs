@@ -1,13 +1,13 @@
 ﻿using Application.InfraInterfaces;
 using Domain.Entities;
-using Infrastructure.Configurations;
+using Infrastructure.Authentication.Configurations;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Infrastructure.Services
+namespace Infrastructure.Authentication.Services
 {
     public class JwtTokenGenerator : IJwtTokenGenerator
     {

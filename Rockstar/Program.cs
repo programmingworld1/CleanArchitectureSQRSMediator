@@ -1,5 +1,7 @@
 using Application;
-using Infrastructure;
+using Infrastructure.Authentication;
+using Infrastructure.External;
+using Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Rockstar;
 using Rockstar.Middlewares;
@@ -8,7 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddPresentationServices();
 builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddInfrastructureExternalServices(builder.Configuration);
+builder.Services.AddInfrastructurePersistanceServices(builder.Configuration);
+builder.Services.AddInfrastructureAuthenticationServices(builder.Configuration);
 builder.Services.AddHttpClient();
 
 builder.Services.AddProblemDetails();

@@ -2,7 +2,7 @@
 using Application.Mediator.LibraryImporter.Models;
 using System.Text.Json;
 
-namespace Infrastructure.Services
+namespace Infrastructure.External.Services
 {
     public class GitHubClient : IGitHubClient
     {

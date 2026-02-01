@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Persistance.Migrations
 {
     /// <inheritdoc />
     public partial class AddFK : Migration

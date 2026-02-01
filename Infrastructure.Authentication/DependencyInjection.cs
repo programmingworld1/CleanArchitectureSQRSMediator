@@ -1,38 +1,27 @@
 ﻿using Application.InfraInterfaces;
-using Application.InfraInterfaces.Persistance;
-using Infrastructure.Configurations;
-using Infrastructure.Persistance;
-using Infrastructure.Services;
+using Infrastructure.Authentication.Configurations;
+using Infrastructure.Authentication.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace Infrastructure
+namespace Infrastructure.Authentication
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services,
+        public static IServiceCollection AddInfrastructureAuthenticationServices(this IServiceCollection services,
             ConfigurationManager configurationManager)
         {
             services.Configure<JwtSettings>(configurationManager.GetSection(JwtSettings.SectionName));
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
-            services.AddScoped<IGitHubClient, GitHubClient>();
-
-            services.AddDbContext<AppDbContext>(opt =>
-                opt.UseSqlServer(configurationManager.GetConnectionString("SqlServer")));
-
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IArtistRepository, ArtistRepository>();
-            services.AddScoped<ISongRepository, SongRepository>();
 
             var jwtSettings = new JwtSettings();
             configurationManager.Bind(JwtSettings.SectionName, jwtSettings);
 
             services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidateAudience = true,
                     ValidateIssuer = true,
