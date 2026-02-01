@@ -18,6 +18,14 @@
             Name = name.Trim();
         }
 
+        public void UpdateName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Artist name is required", nameof(name));
+
+            Name = name.Trim();
+        }
+
         public void AddSong(Song song)
         {
             if (song is null)

@@ -1,7 +1,7 @@
-﻿namespace Application.Mediator.Artist.Commands
+﻿using Application.ApplicationResult;
+using MediatR;
+
+namespace Application.Mediator.Artist.Commands
 {
-    public class UpdateArtistCommand
-    {
-        public string Name { get; set; }
-    }
+    public record UpdateArtistCommand(int Id, string Name) : IRequest<Result>;
 }
