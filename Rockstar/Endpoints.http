@@ -50,7 +50,7 @@ Authorization: Bearer {{myBearerToken}}
 Content-Type: application/json
 [
   {
-    "name": "MyNewArtisttttt"
+    "Name": "MyNewArtisttttt"
   }
 ]
 
@@ -66,15 +66,15 @@ X-Api-Key: {{apiKey}}
 Authorization: Bearer {{myBearerToken}}
 Content-Type: application/json
 {
-  "name": "newsongg",
-  "year": 1800,
-  "artistName": "311",
-  "shortname": "newartistName",
-  "bpm": 10,
-  "duration": 50000,
-  "genre": "newartistName",
-  "spotifyId": "newartistName",
-  "album": "newartistName"
+  "Name": "newsongg",
+  "Year": 1800,
+  "ArtistName": "311",
+  "Shortname": "newartistName",
+  "Bpm": 10,
+  "Duration": 50000,
+  "Genre": "newartistName",
+  "SpotifyId": "newartistName",
+  "Album": "newartistName"
 }
 
 ### Delete Song
