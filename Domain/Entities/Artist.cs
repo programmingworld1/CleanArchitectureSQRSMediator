@@ -26,6 +26,15 @@
             Name = name.Trim();
         }
 
+        public bool HasSong(string songName)
+        {
+            if (string.IsNullOrWhiteSpace(songName))
+                return false;
+
+            var trimmedName = songName.Trim();
+            return _songs.Any(s => string.Equals(s.Name.Trim(), trimmedName, StringComparison.OrdinalIgnoreCase));
+        }
+
         public void AddSong(Song song)
         {
             if (song is null)

@@ -4,7 +4,6 @@
     {
         public int Id { get; private set; }
 
-        public int ArtistId { get; private set; }
         public Artist Artist { get; private set; }
 
         public string Name { get; private set; }
@@ -21,7 +20,6 @@
         private Song() { }
 
         public Song(
-            int artistId,
             string name,
             int year,
             int bpm,
@@ -33,8 +31,6 @@
         {
             // All of the business logic related validation.
             // The other validations are at DTO level with fluent validation, or in the DB (via for example MaxCount).
-            if (artistId <= 0)
-                throw new ArgumentException("ArtistId must be valid.", nameof(artistId));
 
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Song name is required.", nameof(name));
@@ -45,7 +41,6 @@
             if (duration <= 0)
                 throw new ArgumentOutOfRangeException(nameof(duration));
 
-            ArtistId = artistId;
             Name = name;
             Year = year;
             Bpm = bpm;

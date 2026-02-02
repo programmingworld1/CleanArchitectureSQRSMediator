@@ -71,7 +71,11 @@ namespace Application.Mediator.LibraryImporter.Commands
                 if (artist == null)
                     continue;
 
+                if (artist.HasSong(songDto.Name))
+                    continue;
+
                 var song = _mapper.Map<Domain.Entities.Song>(songDto);
+
                 artist.AddSong(song);
             }
 

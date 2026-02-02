@@ -32,7 +32,7 @@ namespace Application.Mediator.Song.Queries
                 return cached;
             }
 
-            var songs = await _songRepository.GetAll(s => s.Genre == request.Genre);
+            var songs = await _songRepository.GetAllWithArtist(s => s.Genre == request.Genre);
 
             var songDtos = _mapper.Map<List<SongDto>>(songs);
 

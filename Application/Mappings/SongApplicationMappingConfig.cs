@@ -1,4 +1,5 @@
 ﻿using Application.Mediator.LibraryImporter.Models;
+using Application.Mediator.Song.Commands;
 using Application.Mediator.Song.Models;
 using Domain.Entities;
 using Mapster;
@@ -13,10 +14,13 @@ namespace Application.Mappings
                 .Map(x => x.Bpm, y => y.Bpm ?? 0)
                 .Ignore(x => x.Artist)
                 .Ignore(x => x.Id)
-                .Ignore(x => x.ArtistId)
                 .MapToConstructor(true);
 
-            config.NewConfig<Song, SongDto>();
+            config.NewConfig<Song, SongDto>()
+                 .Map(dest => dest.ArtistName, src => src.Artist != null ? src.Artist.Name : null);
+
+            config.NewConfig<CreateSongCommand, Song>()
+                .MapToConstructor(true);
         }
     }
 }

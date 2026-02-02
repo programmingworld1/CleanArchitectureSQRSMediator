@@ -2,63 +2,71 @@
 @apiKey=key-1-super-secret
 @myBearerToken=
 
+# Note: In JSON the convention is to use PasCal
+
 ### Register
-POST {{host}}/authentication/register
+POST {{host}}/api/authentication/create
 X-Api-Key: {{apiKey}}
 Content-Type: application/json
 {
-  "firstName": "Voornaam",
-  "lastName": "Achternaam",
-  "email": "test@teamrockstars.nl",
-  "password": "pass123"
+  "FirstName": "Voornaam",
+  "LastName": "Achternaam",
+  "Email": "test@teamrockstars.nl",
+  "Password": "pass123"
 }
 
 ### Login
-POST {{host}}/authentication/login
+POST {{host}}/api/authentication/login
 X-Api-Key: {{apiKey}}
 Content-Type: application/json
 {
-  "email": "test@teamrockstars.nl",
-  "password": "pass123"
+  "Email": "test@teamrockstars.nl",
+  "Password": "pass123"
 }
 
 ### Get artist
-GET {{host}}/Artists/GetArtist?name=311
+GET {{host}}/api/artists?name=3111
 X-Api-Key: {{apiKey}}
 Authorization: Bearer {{myBearerToken}}
+
+### Update artist
+PUT {{host}}/api/artists/5
+X-Api-Key: {{apiKey}}
+Authorization: Bearer {{myBearerToken}}
+Content-Type: application/json
+{
+  "Name": "3111"
+}
 
 ### Import Artists
-PUT {{host}}/Artists/Import
+PUT {{host}}/api/artists/import
 X-Api-Key: {{apiKey}}
 Authorization: Bearer {{myBearerToken}}
 
-### Register Artists
-POST {{host}}/Artists/RegisterArtists
+### Create Artists
+POST {{host}}/api/artists
 X-Api-Key: {{apiKey}}
 Authorization: Bearer {{myBearerToken}}
 Content-Type: application/json
 [
   {
-    "name": "MyNewArtistttt"
+    "name": "MyNewArtisttttt"
   }
 ]
 
 ### Delete Artist
-POST {{host}}/Artists/DeleteArtist
+DELETE {{host}}/api/artists/2
 X-Api-Key: {{apiKey}}
 Authorization: Bearer {{myBearerToken}}
 Content-Type: application/json
-{
-  "id": 1
-}
 
-### Register Song
-POST {{host}}/Song/RegisterSong
+### Create Song
+POST {{host}}/api/songs
 X-Api-Key: {{apiKey}}
 Authorization: Bearer {{myBearerToken}}
 Content-Type: application/json
 {
-  "name": "newsong",
+  "name": "newsongg",
   "year": 1800,
   "artistName": "311",
   "shortname": "newartistName",
@@ -70,15 +78,12 @@ Content-Type: application/json
 }
 
 ### Delete Song
-POST {{host}}/Song/DeleteSong
+DELETE {{host}}/api/songs/1
 X-Api-Key: {{apiKey}}
 Authorization: Bearer {{myBearerToken}}
-Content-Type: application/json
-{
-  "id": 1
-}
+
 
 ### Get Songs
-GET {{host}}/Song/GetSongsOnGenre?Genre=Metal
+GET {{host}}/api/songs?Genre=Metal
 X-Api-Key: {{apiKey}}
 Authorization: Bearer {{myBearerToken}}

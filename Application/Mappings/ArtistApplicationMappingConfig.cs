@@ -8,12 +8,13 @@ namespace Application.Mappings
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Domain.Entities.Artist, Mediator.Artist.Models.FindArtistResult>();
+            config.NewConfig<Domain.Entities.Artist, FindArtistResult>();
 
             config.NewConfig<CreateArtistItem, Domain.Entities.Artist>()
                 .MapToConstructor(true);
 
             config.NewConfig<ArtistJsonDto, Domain.Entities.Artist>()
+                .MapToConstructor(true)
                 .Ignore(x => x.Id);
         }
     }

@@ -18,8 +18,7 @@ namespace Infrastructure.Persistance.Configurations
 
             builder
                 .HasOne(s => s.Artist)
-                .WithMany(a => a.Songs)
-                .HasForeignKey(s => s.ArtistId);
+                .WithMany(a => a.Songs);
         }
     }
 }
