@@ -25,12 +25,12 @@ namespace Application.Mediator.Authentication.Commands.Create
 
         public async Task<Result<AuthenticationResult>> Handle(CreateUserCommand command, CancellationToken cancellationToken)
         {
-            if (!command.Email.EndsWith("@teamrockstars.nl", StringComparison.OrdinalIgnoreCase))
+            if (!command.Email.EndsWith("@teamdevs.nl", StringComparison.OrdinalIgnoreCase))
             {
                 return Result<AuthenticationResult>.Failure(
                     new Error(
                         "WrongEmail",
-                        "Invalid e-mail. Only rockstarts can register."
+                        "Invalid e-mail. Only devs can register."
                     )
                 );
             }

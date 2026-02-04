@@ -1,9 +1,15 @@
-﻿namespace Domain.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Domain.Entities
 {
     public class Artist
     {
         public int Id { get; private set; }
         public string Name { get; private set; }
+
+        [Timestamp]
+        public byte[]? RowVersion { get; set; }
+
         private readonly List<Song> _songs = new();
         public IReadOnlyCollection<Song> Songs => _songs.AsReadOnly();
 

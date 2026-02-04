@@ -88,11 +88,11 @@ namespace Rockstar.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Update(int id, UpdateArtistRequest request)
         {
-            var command = new UpdateArtistCommand(id, request.Name);
+            var command = new UpdateArtistCommand(id, request.Name, request.RowVersion);
 
             await _mediator.Send(command);
 
-            return Ok();
+            return NoContent();
         }
 
         [HttpDelete("{id:int}")]

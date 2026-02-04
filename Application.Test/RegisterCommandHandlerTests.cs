@@ -28,12 +28,12 @@ namespace Application.Test
         {
             // Arrange
             var command = new CreateUserCommand 
-            { 
-                Email = "test@teamrockstars.nl", 
-                FirstName = "FirstName", 
-                LastName = "LastName", 
-                Password = "123"
-            };
+            ( 
+                "FirstName", 
+                "LastName",
+                "test@teamdevs.nl",
+                "123"
+            );
 
             _userRepositoryMock
                 .Setup(repo => repo.GetUserByEmail(command.Email))
@@ -75,7 +75,7 @@ namespace Application.Test
         public async Task Handle_WrongEmail_ThrowsWrongEmailException(string email)
         {
             // Arrange
-            var command = new CreateUserCommand { Email = email, FirstName = null, LastName = null, Password = null };
+            var command = new CreateUserCommand ( null, null, email, null );
 
             _userRepositoryMock
                 .Setup(repo => repo.GetUserByEmail(command.Email))
@@ -92,11 +92,11 @@ namespace Application.Test
         public async Task Handle_UserAlreadyExits_ThrowsDuplicateEmailException()
         {
             // Arrange
-            var command = new CreateUserCommand { Email = "test@teamrockstars.nl", FirstName = null, LastName = null, Password = null };
+            var command = new CreateUserCommand (null, null, "test@teamdevs.nl", null );
 
             _userRepositoryMock
                 .Setup(repo => repo.GetUserByEmail(command.Email))
-                .Returns(new User("", "", "test@teamrockstars.nl", null));
+                .Returns(new User("", "", "test@teamdevs.nl", null));
 
             var handler = CreateHandler();
 

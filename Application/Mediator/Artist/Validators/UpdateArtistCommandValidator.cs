@@ -8,7 +8,11 @@ namespace Application.Mediator.Artist.Validators
         public UpdateArtistCommandValidator()
         {
             RuleFor(x => x.Name).NotEmpty();
-            // Add more validation rules as needed
+
+            RuleFor(x => x.RowVersion)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("RowVersion is required for updates.");
         }
     }
 }

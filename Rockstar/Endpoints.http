@@ -1,6 +1,6 @@
 @host=https://localhost:7276
 @apiKey=key-1-super-secret
-@myBearerToken=
+@myBearerToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwYWJkZjRlOS1mMDJkLTQ5YzgtOTBmYy0xMTgxNzcwNmY0NmUiLCJnaXZlbl9uYW1lIjoiVm9vcm5hYW0iLCJmYW1pbHlfbmFtZSI6IkFjaHRlcm5hYW0iLCJqdGkiOiI2ODc1MDIzNy0xMTUxLTQ1MmUtOTllYy1mZTljYjI4MWI1YTYiLCJleHAiOjE3NzAxOTYzOTMsImlzcyI6Ik15LUFwaSIsImF1ZCI6Ik15LUFwaSJ9.E7qodwTnplMBfNzrm3sQEFaSO-kRrH9vIFqha7D5MBU
 
 # Note: In JSON the convention is to use PasCal
 

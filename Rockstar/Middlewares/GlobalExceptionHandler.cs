@@ -2,7 +2,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Authentication;
+using Microsoft.EntityFrameworkCore;
 
 namespace Rockstar.Middlewares
 {
@@ -25,6 +25,13 @@ namespace Rockstar.Middlewares
                 ValidationException valEx => CreateValidationProblem(
                     context,
                     valEx
+                ),
+
+                DbUpdateConcurrencyException concurrencyEx => CreateProblem(
+                    context,
+                    StatusCodes.Status409Conflict,
+                    "The resource was modified by another user. Please refresh and try again.",
+                    "ConcurrencyConflict"
                 ),
 
                 _ => CreateProblem(

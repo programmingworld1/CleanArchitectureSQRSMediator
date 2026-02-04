@@ -14,6 +14,10 @@ namespace Infrastructure.Persistance.Configurations
             builder
                 .HasIndex(a => a.Name)
                 .IsUnique();
+
+            builder.Property(a => a.RowVersion)
+                .IsRowVersion()
+                .IsConcurrencyToken();
         }
     }
 }
