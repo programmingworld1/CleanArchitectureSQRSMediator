@@ -7,10 +7,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Rockstar.Controllers
+namespace Rockstar.Controllers.V1
 {
     [ApiController]
-    [Route("api/songs")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/songs")]
     [Authorize]
     public class SongController : ControllerBase
     {

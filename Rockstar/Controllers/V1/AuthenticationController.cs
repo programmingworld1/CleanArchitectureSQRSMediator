@@ -6,10 +6,11 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Rockstar.Middlewares;
 
-namespace Rockstar.Controllers
+namespace Rockstar.Controllers.V1
 {
     [ApiController]
-    [Route("api/authentication")]
+    [ApiVersion("1.0")] // Declare all versions that this controller supports
+    [Route("api/v{version:apiVersion}/authentication")]
     public class AuthenticationController : ControllerBase
     {
         private readonly IMediator _mediator;

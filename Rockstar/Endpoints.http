@@ -1,36 +1,36 @@
 @host=https://localhost:7276
 @apiKey=key-1-super-secret
-@myBearerToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwYWJkZjRlOS1mMDJkLTQ5YzgtOTBmYy0xMTgxNzcwNmY0NmUiLCJnaXZlbl9uYW1lIjoiVm9vcm5hYW0iLCJmYW1pbHlfbmFtZSI6IkFjaHRlcm5hYW0iLCJqdGkiOiI2ODc1MDIzNy0xMTUxLTQ1MmUtOTllYy1mZTljYjI4MWI1YTYiLCJleHAiOjE3NzAxOTYzOTMsImlzcyI6Ik15LUFwaSIsImF1ZCI6Ik15LUFwaSJ9.E7qodwTnplMBfNzrm3sQEFaSO-kRrH9vIFqha7D5MBU
+@myBearerToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ODc4NjNhZC0xNzk3LTRhZDEtODZhOC1iYWU5OWFmOGYwZGIiLCJnaXZlbl9uYW1lIjoiVm9vcm5hYW0iLCJmYW1pbHlfbmFtZSI6IkFjaHRlcm5hYW0iLCJqdGkiOiJmZGE3NGFlNy1hNmMzLTQ4ZjktYTg3NC1kYmU3MjhlMzVmNTIiLCJleHAiOjE3NzAzODk2OTgsImlzcyI6Ik15LUFwaSIsImF1ZCI6Ik15LUFwaSJ9.ozm1oSOhIKlaPtMAtZi-JsEtzK4NR_COF90p6Y-Djdo
 
 # Note: In JSON the convention is to use PasCal
 
 ### Register
-POST {{host}}/api/authentication/create
+POST {{host}}/api/v1/authentication/create
 X-Api-Key: {{apiKey}}
 Content-Type: application/json
 {
   "FirstName": "Voornaam",
   "LastName": "Achternaam",
-  "Email": "test@teamrockstars.nl",
+  "Email": "test@teamdevs.nl",
   "Password": "pass123"
 }
 
 ### Login
-POST {{host}}/api/authentication/login
+POST {{host}}/api/v1/authentication/login
 X-Api-Key: {{apiKey}}
 Content-Type: application/json
 {
-  "Email": "test@teamrockstars.nl",
+  "Email": "test@teamdevs.nl",
   "Password": "pass123"
 }
 
 ### Get artist
-GET {{host}}/api/artists?name=3111
+GET {{host}}/api/v1/artists?name=3111
 X-Api-Key: {{apiKey}}
 Authorization: Bearer {{myBearerToken}}
 
 ### Update artist
-PUT {{host}}/api/artists/5
+PUT {{host}}/api/v1/artists/5
 X-Api-Key: {{apiKey}}
 Authorization: Bearer {{myBearerToken}}
 Content-Type: application/json
@@ -39,12 +39,12 @@ Content-Type: application/json
 }
 
 ### Import Artists
-PUT {{host}}/api/artists/import
+PUT {{host}}/api/v1/artists/import
 X-Api-Key: {{apiKey}}
 Authorization: Bearer {{myBearerToken}}
 
 ### Create Artists
-POST {{host}}/api/artists
+POST {{host}}/api/v1/artists
 X-Api-Key: {{apiKey}}
 Authorization: Bearer {{myBearerToken}}
 Content-Type: application/json
@@ -55,13 +55,13 @@ Content-Type: application/json
 ]
 
 ### Delete Artist
-DELETE {{host}}/api/artists/2
+DELETE {{host}}/api/v1/artists/2
 X-Api-Key: {{apiKey}}
 Authorization: Bearer {{myBearerToken}}
 Content-Type: application/json
 
 ### Create Song
-POST {{host}}/api/songs
+POST {{host}}/api/v1/songs
 X-Api-Key: {{apiKey}}
 Authorization: Bearer {{myBearerToken}}
 Content-Type: application/json
@@ -78,12 +78,12 @@ Content-Type: application/json
 }
 
 ### Delete Song
-DELETE {{host}}/api/songs/1
+DELETE {{host}}/api/v1/songs/1
 X-Api-Key: {{apiKey}}
 Authorization: Bearer {{myBearerToken}}
 
 
 ### Get Songs
-GET {{host}}/api/songs?Genre=Metal
+GET {{host}}/api/v1/songs?Genre=Metal
 X-Api-Key: {{apiKey}}
 Authorization: Bearer {{myBearerToken}}

@@ -7,27 +7,33 @@ using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Rockstar.Middlewares;
 
-namespace Rockstar.Controllers
+namespace Rockstar.Controllers.V1
 {
     [ApiController]
-    [Route("api/artists")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/artists")]
     [Authorize]
     public class ArtistController : ControllerBase
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
+        private readonly BusinessProblemDetailsFactory _problemDetailsFactory;
 
         public ArtistController(
             IMediator mediator,
-            IMapper mapper)
+            IMapper mapper,
+            BusinessProblemDetailsFactory problemDetailsFactory)
         {
             _mediator = mediator;
             _mapper = mapper;
+            _problemDetailsFactory = problemDetailsFactory;
         }
 
         [HttpGet]
         [ProducesResponseType(typeof(FindArtistResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get([FromQuery] FindArtistRequest request)
@@ -36,7 +42,17 @@ namespace Rockstar.Controllers
 
             var result = await _mediator.Send(query);
 
-            return Ok(result);
+            // Check IsSuccess, niet null
+            if (!result.IsSuccess)
+            {
+                var pd = _problemDetailsFactory.Create(HttpContext, result.Error!);
+                return new ObjectResult(pd)
+                {
+                    StatusCode = pd.Status
+                };
+            }
+
+            return Ok(result.Value);
         }
 
         [HttpPut("import")]

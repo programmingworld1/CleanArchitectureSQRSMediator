@@ -44,7 +44,6 @@ Missed Signal
 
 
 Last Write Wins Race:
-
 sequenceDiagram
     participant User1
     participant User2
@@ -68,3 +67,17 @@ sequenceDiagram
     User2->>DB: GET Artist Name
 
     Note over DB: User2 may read OLD or NEW value depending on timing
+
+Check-Then-Act Race:
+sequenceDiagram
+    participant User1
+    participant User2
+    participant DB
+    
+    User1->>DB: CHECK if Artist exists
+    DB-->>User1: Yes, exists
+    Note over User1,User2: Race window!
+    User2->>DB: DELETE Artist
+    User1->>DB: ACT: UPDATE Artist
+    
+    Note over DB: Artist no longer exists!<br/>Update fails or corrupts data
