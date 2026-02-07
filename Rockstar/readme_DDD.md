@@ -7,14 +7,12 @@ Ubiquitous language means that everyone involved in the project uses the same te
 - Protecting invariants: All changes to the domain model should go through the aggregate root, which ensures that the business rules and invariants are enforced. This helps to maintain data consistency across the system.
 - Encapsulation: The domain model should encapsulate the business logic and data, and should not expose its internal state to the outside world. This helps to protect the integrity of the domain model and prevents external code from modifying it in ways that could violate business rules or invariants.
 
-
 Typical symptoms in non-DDD systems:
 - Business rules scattered across controllers, services, and repositories
 - Nobody knows where logic lives
-- Changing one rule breaks three others
-- “Just add an if statement” becomes dangerous
+- “Just add an if statement” becomes dangerous: (because there could be like 5 places where this if statement needs to be added, and if you forget one, it could break the system)
+- Changing one rule breaks three others: because rules are scattered across the system, changing one rule could have unintended consequences on other parts of the system that rely on that rule. Because you cant see the link. But placing it in the domain you will see the link.
 - New developers are afraid to touch code
-
 
 Domain Events
 - A domain event is something that happens in the domain that is of interest to the business. For example, a customer placing an order is a domain event.
