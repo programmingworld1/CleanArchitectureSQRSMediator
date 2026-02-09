@@ -6,6 +6,7 @@ using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Rockstar.Middlewares;
 
 namespace Rockstar.Controllers.V1
 {
@@ -17,13 +18,16 @@ namespace Rockstar.Controllers.V1
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
+        private readonly BusinessProblemDetailsFactory _problemDetailsFactory;
 
         public SongController(
             IMediator mediator,
-            IMapper mapper)
+            IMapper mapper,
+            BusinessProblemDetailsFactory problemDetailsFactory)
         {
             _mediator = mediator;
             _mapper = mapper;
+            _problemDetailsFactory = problemDetailsFactory;
         }
 
         [HttpGet]
@@ -49,7 +53,17 @@ namespace Rockstar.Controllers.V1
         {
             var command = _mapper.Map<CreateSongCommand>(request);
 
-            await _mediator.Send(command);
+            var result = await _mediator.Send(command);
+
+            if (!result.IsSuccess)
+            {
+                var pd = _problemDetailsFactory.Create(HttpContext, result.Error!);
+
+                return new ObjectResult(pd) 
+                { 
+                    StatusCode = pd.Status 
+                };
+            }
 
             return Created();
         }

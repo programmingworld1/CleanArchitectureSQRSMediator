@@ -4,7 +4,6 @@ using Application.Mediator.LibraryImporter.Models;
 using FluentValidation;
 using MapsterMapper;
 using MediatR;
-using System.Text.Json;
 
 namespace Application.Mediator.LibraryImporter.Commands
 {
@@ -14,8 +13,6 @@ namespace Application.Mediator.LibraryImporter.Commands
         private readonly IArtistRepository _artistRepository;
         private readonly IGitHubClient _gitHubClient;
         private readonly IValidator<SongJsonDto> _songValidator;
-
-        private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
 
         public ImportLibraryCommandHandler(
             IMapper mapper,
@@ -57,7 +54,7 @@ namespace Application.Mediator.LibraryImporter.Commands
 
                 if (!validation.IsValid)
                 {
-                    continue; // skip this record
+                    continue;
                 }
 
                 if (songDto.Year >= 2016)

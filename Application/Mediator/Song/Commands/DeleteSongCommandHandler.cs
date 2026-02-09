@@ -6,22 +6,19 @@ namespace Application.Mediator.Song.Commands
 {
     public class DeleteSongCommandHandler : IRequestHandler<DeleteSongCommand, Result>
     {
-        private readonly ISongRepository _songRepository;
         private readonly IArtistRepository _artistRepository;
 
-        public DeleteSongCommandHandler(
-            ISongRepository songRepository,
-            IArtistRepository artistRepository)
+        public DeleteSongCommandHandler(IArtistRepository artistRepository)
         {
-            _songRepository = songRepository;
             _artistRepository = artistRepository;
         }
 
         public async Task<Result> Handle(DeleteSongCommand command, CancellationToken cancellationToken)
         {
-            var song = await _songRepository.GetById(command.Id);
+            // Find artist that owns this song
+            var artist = await _artistRepository.GetArtistBySongId(command.Id);
 
-            if (song == null)
+            if (artist == null)
             {
                 return Result.Failure(
                     new Error(
@@ -31,7 +28,7 @@ namespace Application.Mediator.Song.Commands
                 );
             }
 
-            _songRepository.Delete(song);
+            artist.RemoveSong(command.Id);
 
             await _artistRepository.CommitAsync();
 

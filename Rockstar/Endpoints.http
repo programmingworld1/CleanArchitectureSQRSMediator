@@ -1,6 +1,6 @@
 @host=https://localhost:7276
 @apiKey=key-1-super-secret
-@myBearerToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ODc4NjNhZC0xNzk3LTRhZDEtODZhOC1iYWU5OWFmOGYwZGIiLCJnaXZlbl9uYW1lIjoiVm9vcm5hYW0iLCJmYW1pbHlfbmFtZSI6IkFjaHRlcm5hYW0iLCJqdGkiOiJmZGE3NGFlNy1hNmMzLTQ4ZjktYTg3NC1kYmU3MjhlMzVmNTIiLCJleHAiOjE3NzAzODk2OTgsImlzcyI6Ik15LUFwaSIsImF1ZCI6Ik15LUFwaSJ9.ozm1oSOhIKlaPtMAtZi-JsEtzK4NR_COF90p6Y-Djdo
+@myBearerToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkMDNkZmVmMC03YTViLTRkMzQtOWMyYS00ZjY5ZThmNGM1NzgiLCJnaXZlbl9uYW1lIjoiVm9vcm5hYW0iLCJmYW1pbHlfbmFtZSI6IkFjaHRlcm5hYW0iLCJqdGkiOiI1N2ViMjljNC1jOWJmLTQ2OTUtYTFlNC03ZDJlZjBjNTk2ZmEiLCJleHAiOjE3NzA1NzA1OTEsImlzcyI6Ik15LUFwaSIsImF1ZCI6Ik15LUFwaSJ9.MwmpRpNNDuJJ4djctARhB47JDYDnNTlw37mP-GNduQI
 
 # Note: In JSON the convention is to use PasCal
 
@@ -25,7 +25,7 @@ Content-Type: application/json
 }
 
 ### Get artist
-GET {{host}}/api/v1/artists?name=3111
+GET {{host}}/api/v1/artists?name=311
 X-Api-Key: {{apiKey}}
 Authorization: Bearer {{myBearerToken}}
 
@@ -66,13 +66,13 @@ X-Api-Key: {{apiKey}}
 Authorization: Bearer {{myBearerToken}}
 Content-Type: application/json
 {
-  "Name": "newsongg",
+  "Name": "newsongggggggg",
   "Year": 1800,
   "ArtistName": "311",
   "Shortname": "newartistName",
   "Bpm": 10,
   "Duration": 50000,
-  "Genre": "newartistName",
+  "Genre": "Metal",
   "SpotifyId": "newartistName",
   "Album": "newartistName"
 }

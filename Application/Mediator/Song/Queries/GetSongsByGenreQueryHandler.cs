@@ -26,8 +26,7 @@ namespace Application.Mediator.Song.Queries
         {
             var cacheKey = $"songs:genre:{request.Genre.ToLowerInvariant()}";
 
-            // 1️⃣ Eerst cache checken
-            if (_cache.TryGetValue(cacheKey, out GetSongsByGenreResult cached))
+            if (_cache.TryGetValue(cacheKey, out GetSongsByGenreResult? cached) && cached != null)
             {
                 return cached;
             }

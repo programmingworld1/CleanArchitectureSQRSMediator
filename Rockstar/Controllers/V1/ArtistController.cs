@@ -46,6 +46,7 @@ namespace Rockstar.Controllers.V1
             if (!result.IsSuccess)
             {
                 var pd = _problemDetailsFactory.Create(HttpContext, result.Error!);
+
                 return new ObjectResult(pd)
                 {
                     StatusCode = pd.Status
@@ -81,7 +82,7 @@ namespace Rockstar.Controllers.V1
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]

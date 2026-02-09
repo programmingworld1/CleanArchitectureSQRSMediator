@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Application.ApplicationResult;
+using MediatR;
 
 namespace Application.Mediator.Song.Commands
 {
@@ -12,5 +13,5 @@ namespace Application.Mediator.Song.Commands
         string? Genre,
         string? SpotifyId,
         string? Album
-    ) : IRequest;
+    ) : IRequest<Result>;
 }

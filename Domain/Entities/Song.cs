@@ -1,15 +1,15 @@
-﻿namespace Domain.Entities
+﻿using Domain.ValueObjects;
+
+namespace Domain.Entities
 {
     public class Song
     {
         public int Id { get; private set; }
-
         public Artist Artist { get; private set; }
-
         public string Name { get; private set; }
-        public int Year { get; private set; }
-        public int Bpm { get; private set; }
-        public int Duration { get; private set; }
+        public Year Year { get; private set; }
+        public Bpm Bpm { get; private set; }
+        public Duration Duration { get; private set; }
 
         public string? Shortname { get; private set; }
         public string? Genre { get; private set; }
@@ -21,25 +21,16 @@
 
         public Song(
             string name,
-            int year,
-            int bpm,
-            int duration,
+            Year year,
+            Bpm bpm,
+            Duration duration,
             string? shortname = null,
             string? genre = null,
             string? spotifyId = null,
             string? album = null)
         {
-            // All of the business logic related validation.
-            // The other validations are at DTO level with fluent validation, or in the DB (via for example MaxCount).
-
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Song name is required.", nameof(name));
-
-            if (bpm <= 0)
-                throw new ArgumentOutOfRangeException(nameof(bpm));
-
-            if (duration <= 0)
-                throw new ArgumentOutOfRangeException(nameof(duration));
 
             Name = name;
             Year = year;

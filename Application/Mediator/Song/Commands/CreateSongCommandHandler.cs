@@ -1,4 +1,5 @@
-﻿using Application.Errors;
+﻿using Application.ApplicationResult;
+using Application.Errors;
 using Application.InfraInterfaces.Persistance;
 using FluentValidation;
 using MapsterMapper;
@@ -6,7 +7,7 @@ using MediatR;
 
 namespace Application.Mediator.Song.Commands
 {
-    public class CreateSongCommandHandler : IRequestHandler<CreateSongCommand>
+    public class CreateSongCommandHandler : IRequestHandler<CreateSongCommand, Result>
     {
         private readonly IMapper _mapper;
         private readonly IArtistRepository _artistRepository;
@@ -21,7 +22,7 @@ namespace Application.Mediator.Song.Commands
             _validator = validator;
         }
 
-        public async Task Handle(CreateSongCommand command, CancellationToken cancellationToken)
+        public async Task<Result> Handle(CreateSongCommand command, CancellationToken cancellationToken)
         {
             await _validator.ValidateAndThrowAsync(command, cancellationToken);
 
@@ -29,7 +30,12 @@ namespace Application.Mediator.Song.Commands
 
             if(artist == null)
             {
-                throw new NotFoundException(nameof(Artist), command.ArtistName);
+                return Result.Failure(
+                    new Error(
+                        "ArtistNotFound",
+                        $"Artist with name {command.ArtistName} was not found."
+                    )
+                );
             }
 
             var song = _mapper.Map<Domain.Entities.Song>(command);
@@ -37,6 +43,8 @@ namespace Application.Mediator.Song.Commands
             artist.AddSong(song);
 
             await _artistRepository.CommitAsync();
+
+            return Result.Success();
         }
     }
 }

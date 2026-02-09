@@ -34,7 +34,10 @@ namespace Rockstar.Middlewares
         private static int MapStatusCode(string errorCode)
             => errorCode switch
             {
+                "ArtistNotFound" => StatusCodes.Status404NotFound,
+                "SongNotFound" => StatusCodes.Status404NotFound,
                 "EmailAlreadyExists" => StatusCodes.Status409Conflict,
+                "WrongEmail" => StatusCodes.Status400BadRequest,
                 _ => StatusCodes.Status400BadRequest
             };
     }

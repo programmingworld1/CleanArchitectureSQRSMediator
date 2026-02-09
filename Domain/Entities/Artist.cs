@@ -52,5 +52,15 @@
 
             _songs.Add(song);
         }
+
+        public void RemoveSong(int songId)
+        {
+            var song = _songs.FirstOrDefault(s => s.Id == songId);
+
+            if (song == null)
+                throw new InvalidOperationException($"Song with ID {songId} not found for this artist.");
+
+            _songs.Remove(song);
+        }
     }
 }

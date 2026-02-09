@@ -25,6 +25,7 @@ namespace Application.Mediator.LibraryImporter.Validators
                 .When(x => x.Duration != 0);
 
             RuleFor(x => x.Bpm)
+                .NotNull()
                 .GreaterThan(0)
                 .When(x => x.Bpm != null);
 

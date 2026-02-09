@@ -1,4 +1,4 @@
-﻿namespace Application.Mediator.LibraryImporter.Models
+﻿namespace Infrastructure.External.Models
 {
     public class ArtistJsonDto
     {

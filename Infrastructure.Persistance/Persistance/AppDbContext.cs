@@ -14,6 +14,7 @@ namespace Infrastructure.Persistance
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new BurgerConfiguration());
+            modelBuilder.ApplyConfiguration(new SongConfiguration());
         }
     }
 }
