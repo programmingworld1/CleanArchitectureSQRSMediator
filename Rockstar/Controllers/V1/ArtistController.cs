@@ -41,7 +41,7 @@ namespace Rockstar.Controllers.V1
             var query = _mapper.Map<FindArtistQuery>(request);
 
             var result = await _mediator.Send(query);
-
+            
             // Check IsSuccess, niet null
             if (!result.IsSuccess)
             {
