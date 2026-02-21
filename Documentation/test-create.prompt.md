@@ -1,1 +1,1 @@
-Explain to me what kind of tests there are in the project and where to find it
+Explain to me what kind of tests there are in the project and where to find it.
