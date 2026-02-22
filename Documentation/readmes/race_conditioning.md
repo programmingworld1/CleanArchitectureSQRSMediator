@@ -1,9 +1,9 @@
 1. State Mutation Races (Data Correctness)
-Read–Modify–Write Race
+Readï¿½Modifyï¿½Write Race
 Increment / Decrement Race
 Lost Update
 Last Write Wins
-Read–Write Race
+Readï¿½Write Race
 
 2. Decision & Timing Races
 Check-Then-Act Race
@@ -21,12 +21,12 @@ Partial Construction Exposure
 Async Reentrancy Race
 Async Check-Then-Await Race
 Continuation Interleaving Race
-Cancellation–Completion Race
+Cancellationï¿½Completion Race
 
 5. Initialization & Lifecycle Races
 Lazy Initialization Race
 Double Initialization Race
-Dispose–Use Race
+Disposeï¿½Use Race
 Resource Lifetime Race
 
 6. Shared Collections & Resources
@@ -37,7 +37,6 @@ Deadlock
 Lock Order Inversion
 Lost Wake-Up
 Missed Signal
-
 
 
 
