@@ -81,5 +81,26 @@ namespace Rockstar.Controllers.V1
 
             return NoContent();
         }
+
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteMany([FromBody] DeleteSongsRequest request)
+        {
+            var command = new DeleteSongsCommand(request.Ids);
+
+            var result = await _mediator.Send(command);
+
+            if (!result.IsSuccess)
+            {
+                var pd = _problemDetailsFactory.Create(HttpContext, result.Error!);
+
+                return new ObjectResult(pd) { StatusCode = pd.Status };
+            }
+
+            return NoContent();
+        }
     }
 }

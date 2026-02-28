@@ -32,5 +32,14 @@ namespace Infrastructure.Persistance
                 .Where(a => a.Songs.Any(s => s.Id == songId))
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<List<Artist>> GetArtistsBySongIds(List<int> songIds)
+        {
+            return await DbContext
+                .Artists
+                .Include(a => a.Songs)
+                .Where(a => a.Songs.Any(s => songIds.Contains(s.Id)))
+                .ToListAsync();
+        }
     }
 }

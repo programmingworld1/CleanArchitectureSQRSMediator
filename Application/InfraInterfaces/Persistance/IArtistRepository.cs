@@ -7,5 +7,6 @@ namespace Application.InfraInterfaces.Persistance
         Task<List<Artist>> GetAllArtistsIncludingSongs();
         Task<Artist?> GetArtistIncludingSongs(string name);
         Task<Artist?> GetArtistBySongId(int songId);
+        Task<List<Artist>> GetArtistsBySongIds(List<int> songIds);
     }
 }
