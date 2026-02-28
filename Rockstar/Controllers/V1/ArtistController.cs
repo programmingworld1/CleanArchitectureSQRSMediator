@@ -126,6 +126,23 @@ namespace Rockstar.Controllers.V1
             return NoContent();
         }
 
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteMany([FromBody] DeleteArtistsRequest request)
+        {
+            var command = new DeleteArtistsCommand(request.Ids);
+            var result = await _mediator.Send(command);
+            if (!result.IsSuccess)
+            {
+                var pd = _problemDetailsFactory.Create(HttpContext, result.Error!);
+                return new ObjectResult(pd) { StatusCode = pd.Status };
+            }
+            return NoContent();
+        }
+
         // Restfull = API that follows the REST-principles.
         // Use the correct HTTP-method: GET (only read), PUT(replace fully), PATCH(replace partly), POST (create or an action), DELETE
         // API should be stateless, so each requestcontains all info the server needs

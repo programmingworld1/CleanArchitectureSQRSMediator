@@ -11,6 +11,7 @@ namespace Application.InfraInterfaces.Persistance
         Task AddRange(IEnumerable<T> entities);
         void Update(T entity);
         void Delete(T entity);
+        void DeleteRange(IEnumerable<T> entities);
         void Detach(T entity);
         Task CommitAsync();
     }

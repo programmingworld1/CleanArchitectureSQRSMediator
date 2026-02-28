@@ -51,6 +51,11 @@ namespace Infrastructure.Persistance
             _dbSet.Remove(entity);
         }
 
+        public void DeleteRange(IEnumerable<T> entities)
+        {
+            _dbSet.RemoveRange(entities);
+        }
+
         public void Detach(T entity)
         {
             DbContext.Entry(entity).State = EntityState.Detached;
