@@ -1,5 +1,4 @@
-﻿using Application.Errors;
-using Application.InfraInterfaces;
+﻿using Application.InfraInterfaces;
 using Application.InfraInterfaces.Persistance;
 using Application.Mediator.Authentication.Commands.Create;
 using Domain.Entities;
@@ -43,9 +42,9 @@ namespace Application.Test
                 .Setup(m => m.Map<User>(It.IsAny<CreateUserCommand>()))
                 .Returns((CreateUserCommand c) => new User
                 (
-                    c.Email,
                     c.FirstName,
                     c.LastName,
+                    c.Email,
                     c.Password
                 ));
 
@@ -72,10 +71,10 @@ namespace Application.Test
         [InlineData(" ")]
         [InlineData("test@live.nl")]
         [InlineData("test@rockstar.nl")]
-        public async Task Handle_WrongEmail_ThrowsWrongEmailException(string email)
+        public async Task Handle_WrongEmail_ReturnsFailureWithWrongEmailError(string email)
         {
             // Arrange
-            var command = new CreateUserCommand ( null, null, email, null );
+            var command = new CreateUserCommand(null, null, email, null);
 
             _userRepositoryMock
                 .Setup(repo => repo.GetUserByEmail(command.Email))
@@ -83,16 +82,19 @@ namespace Application.Test
 
             var handler = CreateHandler();
 
-            // Act + Assert
-            await Assert.ThrowsAsync<WrongEmailException>(() =>
-                handler.Handle(command, CancellationToken.None));
+            // Act
+            var result = await handler.Handle(command, CancellationToken.None);
+
+            // Assert
+            Assert.False(result.IsSuccess);
+            Assert.Equal("WrongEmail", result.Error?.Code);
         }
 
         [Fact]
-        public async Task Handle_UserAlreadyExits_ThrowsDuplicateEmailException()
+        public async Task Handle_UserAlreadyExists_ReturnsFailureWithDuplicateEmailError()
         {
             // Arrange
-            var command = new CreateUserCommand (null, null, "test@teamdevs.nl", null );
+            var command = new CreateUserCommand(null, null, "test@teamdevs.nl", null);
 
             _userRepositoryMock
                 .Setup(repo => repo.GetUserByEmail(command.Email))
@@ -100,9 +102,12 @@ namespace Application.Test
 
             var handler = CreateHandler();
 
-            // Act + Assert
-            await Assert.ThrowsAsync<DuplicateEmailException>(() =>
-                handler.Handle(command, CancellationToken.None));
+            // Act
+            var result = await handler.Handle(command, CancellationToken.None);
+
+            // Assert
+            Assert.False(result.IsSuccess);
+            Assert.Equal("EmailAlreadyExists", result.Error?.Code);
         }
     }
 }
