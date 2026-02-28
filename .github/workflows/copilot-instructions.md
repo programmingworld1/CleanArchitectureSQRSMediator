@@ -6,6 +6,8 @@ Ensure that for each public method you create an integration test.
 
 Use this for all functions, including private ones. This helps other developers understand the purpose of the function and how to use it correctly.
 
+## Testing
+- All commits must pass unit-tests before merging.
 
 ## Architecture
 - Use Clean Architecture principles
