@@ -36,6 +36,7 @@ if (app.Environment.IsDevelopment())
 //app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseExceptionHandler();
 app.UseHttpsRedirection();
+app.UseCors("VueFrontend");          // Must run before ApiKeyMiddleware so OPTIONS preflight is not rejected
 app.UseMiddleware<ApiKeyMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();

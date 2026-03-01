@@ -56,3 +56,13 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# Vue / Node frontend
+vue-frontend/node_modules/
+vue-frontend/dist/
+vue-frontend/.env.local
+vue-frontend/.env.*.local
+vue-frontend/npm-debug.log*
+vue-frontend/yarn-debug.log*
+vue-frontend/yarn-error.log*
+vue-frontend/.vite/
